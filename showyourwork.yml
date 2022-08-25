@@ -7,9 +7,9 @@ overleaf:
     - src/tex/output
   pull:
     - src/tex/ms.tex
-    - src/tex/spectroscopic.tex
     - src/tex/bib.bib
     - src/tex/misc.bib
     # - src/tex/captions
     # - src/tex/tables
+    - src/tex/tablesspectroscopic.tex
 
