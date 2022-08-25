@@ -11,5 +11,5 @@ overleaf:
     - src/tex/misc.bib
     # - src/tex/captions
     # - src/tex/tables
-    - src/tex/tablesspectroscopic.tex
+    - src/tex/tables/spectroscopic.tex
 
