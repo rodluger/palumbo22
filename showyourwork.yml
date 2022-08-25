@@ -10,5 +10,5 @@ overleaf:
     - src/tex/bib.bib
     - src/tex/misc.bib
     - src/tex/captions
-    - src/text/tables
+    - src/tex/tables
 
