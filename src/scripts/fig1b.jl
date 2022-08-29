@@ -1,5 +1,5 @@
 # imports
-using Pkg; Pkg.activate("."); Pkg.instantiate();
+using Pkg; Pkg.activate(".");
 using GRASS
 using Statistics
 
