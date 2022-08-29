@@ -7,7 +7,6 @@ overleaf:
     - src/tex/output
   pull:
     - src/tex/ms.tex
-    - src/tex/*.tex
     - src/tex/bib.bib
     - src/tex/misc.bib
     # - src/tex/captions
