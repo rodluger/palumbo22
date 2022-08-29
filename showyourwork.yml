@@ -11,4 +11,6 @@ overleaf:
     - src/tex/misc.bib
     # - src/tex/captions
     # - src/tex/tables
-
+scripts:
+  jl:
+    julia {script}
