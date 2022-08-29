@@ -1,9 +1,9 @@
 #!/bin/bash
+#SBATCH -A ebf11_c
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --mem=2GB
 #SBATCH --time=48:00:00
-#SBATCH --allocation=ebf11_c
 #SBATCH --job-name=P22_fig4
 #SBATCH -o /storage/home/mlp95/work/logs/grass/
 
