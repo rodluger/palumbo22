@@ -1,13 +1,20 @@
 # imports
-using Pkg; Pkg.activate(".")
+using Pkg; Pkg.activate("."); Pkg.instantiate();
 using GRASS
 using Statistics
+
+# showyourwork imports
+using PyCall
+py"""
+from showyourwork.paths import user as Paths
+
+paths = Paths()
+"""
 
 # plotting imports
 using LaTeXStrings
 import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
-using PyCall; animation = pyimport("matplotlib.animation");
-mpl.style.use(GRASS.moddir * "figures/fig.mplstyle")
+mpl.style.use(py"""str(paths.scripts)""" * "/fig.mplstyle")
 
 # define some functions
 include(GRASS.moddir * "figures/fig_functions.jl")
@@ -15,6 +22,11 @@ include(GRASS.moddir * "figures/fig_functions.jl")
 # get command line args and output directories
 run, plot = parse_args(ARGS)
 grassdir, plotdir, datadir = check_plot_dirs()
+
+# change output directory if not on PSU cluster
+if !occursin("psu.edu", gethostname())
+    plotdir = py"""str(paths.figures)""" * "/"
+end
 
 # figure 1b -- input bisectors w/ variability
 function main()
@@ -68,6 +80,4 @@ function main()
     return nothing
 end
 
-if (run | plot)
-    main()
-end
+main()
