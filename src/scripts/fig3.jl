@@ -1,5 +1,5 @@
 # environment + packages
-using Pkg; Pkg.activate(".")
+using Pkg; Pkg.activate("."); Pkg.instantiate();
 using CSV
 using HTTP
 using GZip
@@ -9,30 +9,35 @@ using Statistics
 using DataFrames
 using Interpolations
 
-# plotting
+# showyourwork imports
+using PyCall
+py"""
+from showyourwork.paths import user as Paths
+
+paths = Paths()
+"""
+
+# plotting imports
 using LaTeXStrings
 import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
-using PyCall; animation = pyimport("matplotlib.animation");
-mpl.style.use(GRASS.moddir * "figures/fig.mplstyle")
+mpl.style.use(py"""str(paths.scripts)""" * "/fig.mplstyle")
 
-# # define some functions
-include(GRASS.moddir * "figures/fig_functions.jl")
-
-# get command line args and output directories
-run, plot = parse_args(ARGS)
-grassdir, plotdir, datadir = check_plot_dirs()
+# define directories
+const plotdir = py"""str(paths.figures)""" * "/"
+const datadir = py"""str(paths.data)""" * "/"
+const staticdir = py"""str(paths.static)""" * "/"
 
 function download_iag()
     println(">>> Downloading IAG atlas...")
-    file = HTTP.download("https://cdsarc.unistra.fr/ftp/J/A+A/587/A65/spvis.dat.gz",
-                         GRASS.moddir * "figures/", update_period=Inf)
-    println(">>> IAG atlas downloaded!")
+    url = "http://cdsarc.u-strasbg.fr/viz-bin/nph-Cat/txt.gz?J/A+A/587/A65/spvis.dat.gz"
+    file = HTTP.download(url, datadir * "spvis.dat.gz", update_period=Inf)
+    println(">>> IAG atlas downloaded to " * file)
     return nothing
 end
 
 function read_iag(; isolate=true)
     # download the IAG atlas
-    file = GRASS.moddir * "figures/spvis.dat.gz"
+    file = datadir * "spvis.dat.gz"
     if !isfile(file)
         download_iag()
     end
@@ -251,6 +256,5 @@ function main()
     return nothing
 end
 
-if (run | plot)
-    main()
-end
+main()
+
