@@ -14,6 +14,6 @@ overleaf:
 scripts:
   jl:
     julia {script}
-dependencies:
-    src/scripts/fig4_plot.jl:
-        - src/data/rms_vs_res.csv
+# dependencies:
+#     src/scripts/fig4_plot.jl:
+#         - src/data/rms_vs_res.csv
