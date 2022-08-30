@@ -1,23 +1,28 @@
 # imports
-using Pkg; Pkg.activate(".")
+using Pkg; Pkg.activate("."); Pkg.instantiate();
 using GRASS
 using Statistics
+
+# showyourwork imports
+using PyCall
+py"""
+from showyourwork.paths import user as Paths
+
+paths = Paths()
+"""
 
 # plotting imports
 using LaTeXStrings
 import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
-using PyCall; animation = pyimport("matplotlib.animation");
-mpl.style.use(GRASS.moddir * "figures/fig.mplstyle")
+mpl.style.use(py"""str(paths.scripts)""" * "/fig.mplstyle")
 
-# define some functions
-include(GRASS.moddir * "figures/fig_functions.jl")
-
-# get command line args and output directories
-run, plot = parse_args(ARGS)
-grassdir, plotdir, datadir = check_plot_dirs()
+# define directories
+const plotdir = py"""str(paths.figures)""" * "/"
+const datadir = py"""str(paths.data)""" * "/"
+const staticdir = py"""str(paths.static)""" * "/"
 
 # figure 2 -- cleaned + extrapolated input data
-function main()
+function fig2ab()
     # set number of curves to plot
     ncurves = 25
 
@@ -86,6 +91,4 @@ function main()
     return nothing
 end
 
-if (run | plot)
-    main()
-end
+fig2ab()
