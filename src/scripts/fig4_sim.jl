@@ -23,6 +23,9 @@ paths = Paths()
 
 @everywhere datadir = py"""str(paths.data)""" * "/"
 
+# define spec_loop function
+include(GRASS.moddir * "figures/fig_functions.jl")
+
 # some global stuff
 const N = round.(Int, 2 .^ range(6, 10, step=0.5))
 const Nt = 100
