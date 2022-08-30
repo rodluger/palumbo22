@@ -41,7 +41,7 @@ jobs:
         id: build
         uses: showyourwork/showyourwork-action@v1
         env:
-          PYTHON: ${{ env.PYTHON }}
+          PYTHON: ${{ env.pythonLocation }}/bin/python
           SANDBOX_TOKEN: ${{ secrets.SANDBOX_TOKEN }}
           OVERLEAF_EMAIL: ${{ secrets.OVERLEAF_EMAIL }}
           OVERLEAF_PASSWORD: ${{ secrets.OVERLEAF_PASSWORD }}
