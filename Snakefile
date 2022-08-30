@@ -1,3 +1,13 @@
+rule fig2:
+    input:
+        "src/scripts/fig2.jl"
+    output:
+        "src/tex/figures/fig2a.pdf"
+        "src/tex/figures/fig2b.pdf"
+    shell:
+        "julia src/scripts/fig2.jl"
+
+
 # rule fig4:
 #     input:
 #         "src/scripts/fig4_sim.jl"
