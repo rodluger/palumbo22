@@ -1,4 +1,4 @@
-## GRASS: Distinguishing Planet-induced Doppler Signatures from Granulation with a Synthetic Spectra Generator, Palumbo et al. 2022
+### *GRASS: Distinguishing Planet-induced Doppler Signatures from Granulation with a Synthetic Spectra Generator* (Palumbo et al. 2022)
 <a href="https://github.com/palumbom/palumbo22/actions/workflows/build.yml">
 <img src="https://github.com/palumbom/palumbo22/actions/workflows/build.yml/badge.svg?branch=main" alt="Article status"/>
 </a>
