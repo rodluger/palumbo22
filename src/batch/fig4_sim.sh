@@ -5,7 +5,8 @@
 #SBATCH --mem=2GB
 #SBATCH --time=24:00:00
 #SBATCH --job-name=P22_fig4
-#SBATCH -o /storage/home/mlp95/work/logs/grass/
+#SBATCH --output=/storage/home/mlp95/work/logs/grass/fig4_sim.%j.out
+#SBATCH --error=/storage/home/mlp95/work/logs/grass/fig4_sim.%j.err
 
 date
 echo "Job id: $SLURM_JOBID"

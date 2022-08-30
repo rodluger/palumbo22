@@ -3,6 +3,8 @@ using Pkg; Pkg.activate("."); Pkg.instantiate();
 using GRASS
 using Statistics
 
+println(gethostname())
+
 # showyourwork imports
 using PyCall
 py"""
