@@ -1,9 +1,4 @@
-<p align="center">
-<a href="https://github.com/showyourwork/showyourwork">
-<img width = "450" src="https://raw.githubusercontent.com/showyourwork/.github/main/images/showyourwork.png" alt="showyourwork"/>
-</a>
-<br>
-<br>
+## GRASS: Distinguishing Planet-induced Doppler Signatures from Granulation with a Synthetic Spectra Generator, Palumbo et al. 2022
 <a href="https://github.com/palumbom/palumbo22/actions/workflows/build.yml">
 <img src="https://github.com/palumbom/palumbo22/actions/workflows/build.yml/badge.svg?branch=main" alt="Article status"/>
 </a>

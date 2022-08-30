@@ -16,20 +16,21 @@ using LaTeXStrings
 import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
 mpl.style.use(py"""str(paths.scripts)""" * "/fig.mplstyle")
 
-# define some functions
-include(GRASS.moddir * "figures/fig_functions.jl")
+# define directories
+const plotdir = py"""str(paths.figures)""" * "/"
+const datadir = py"""str(paths.data)""" * "/"
+const staticdir = py"""str(paths.static)""" * "/"
 
-# get command line args and output directories
-run, plot = parse_args(ARGS)
-grassdir, plotdir, datadir = check_plot_dirs()
-
-# change output directory if not on PSU cluster
-if !occursin("psu.edu", gethostname())
-    plotdir = py"""str(paths.figures)""" * "/"
+# copy fig1a from src/static to src/tex/figures
+function fig1a()
+    @assert isfile(staticdir * "fig1a.pdf")
+    cp(staticdir * "fig1a.pdf", plotdir * "fig1a.pdf")
+    println(">>> Figure copied to: " * plotdir * "fig1a.pdf")
+    return nothing
 end
 
 # figure 1b -- input bisectors w/ variability
-function main()
+function fig1b()
     # get input data
     bisinfo = GRASS.SolarData()
 
@@ -80,4 +81,5 @@ function main()
     return nothing
 end
 
-main()
+fig1a()
+fig1b()

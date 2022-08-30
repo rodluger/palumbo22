@@ -292,11 +292,11 @@ uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.GRASS]]
 deps = ["BenchmarkTools", "CSV", "DataFrames", "Dates", "Distributed", "EchelleCCFs", "FFTW", "FITSIO", "FileIO", "GZip", "Glob", "HTTP", "HypothesisTests", "Interpolations", "JLD2", "LaTeXStrings", "LsqFit", "PyCall", "PyPlot", "Random", "SharedArrays", "Statistics", "StatsBase"]
-git-tree-sha1 = "336710196202f7b69c23f302f0c1d6372b8fdeba"
+git-tree-sha1 = "15a5918558e2f0aaab2a3576f9c3e25810fddea5"
 repo-rev = "main"
-repo-url = "https://github.com/palumbom/GRASS#v1.0.1"
+repo-url = "https://github.com/palumbom/GRASS#v1.0.2"
 uuid = "beaa24b3-4aa0-42b2-a8f3-c93b81cbd48b"
-version = "0.1.0"
+version = "1.0.2"
 
 [[deps.GZip]]
 deps = ["Libdl"]

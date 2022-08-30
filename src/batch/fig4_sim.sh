@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH -A ebf11_c
 #SBATCH --nodes=1
-#SBATCH --ntasks=8
+#SBATCH --ntasks=1
 #SBATCH --mem=2GB
-#SBATCH --time=48:00:00
+#SBATCH --time=24:00:00
 #SBATCH --job-name=P22_fig4
 #SBATCH -o /storage/home/mlp95/work/logs/grass/
 
@@ -12,6 +12,6 @@ echo "Job id: $SLURM_JOBID"
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR
 echo "About to start Julia"
-julia -p 7 /storage/home/mlp95/work/palubmo22/scripts/fig4_sim.jl
+julia /storage/home/mlp95/work/palubmo22/scripts/fig4_sim.jl
 echo "Julia exited"
 date
