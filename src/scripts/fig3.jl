@@ -44,7 +44,8 @@ function read_iag(; isolate=true)
 
     # read in the IAG atlas
     iag = GZip.open(file, "r") do io
-        CSV.read(io, DataFrame, ignorerepeated=true, delim=" ", header=["wavenum", "nflux", "flux"])
+        CSV.read(io, DataFrame, ignorerepeated=true, delim="|", skipto=5,
+                 footerskip=1, header=["wavenum", "nflux", "flux"])
     end
 
     # convert wavenumber to wavelength in angstroms
