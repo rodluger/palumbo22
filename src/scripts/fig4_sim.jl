@@ -1,6 +1,10 @@
 # imports
 using Distributed
-@everywhere using Pkg; Pkg.activate("."); Pkg.instantiate();
+@everywhere begin
+    using Pkg
+    Pkg.activate(".")
+    Pkg.instantiate()
+end
 @everywhere using GRASS
 @everywhere using Statistics
 @everywhere using EchelleCCFs
