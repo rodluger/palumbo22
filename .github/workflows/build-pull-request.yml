@@ -1,7 +1,4 @@
-
-tlmgr update --self --all
-tlmgr path add
-fmtutil-sys --allname: build pull request
+name: build pull request
 
 on:
   pull_request:
