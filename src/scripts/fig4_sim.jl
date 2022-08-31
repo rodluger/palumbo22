@@ -1,26 +1,26 @@
 # import stuff
 using Distributed
-@everywhere begin
-    using Pkg; Pkg.activate(".")
-    using CSV
-    using GRASS
-    using LsqFit
-    using DataFrames
-    using Statistics
-    using EchelleCCFs
-    using SharedArrays
-end
+@everywhere using Pkg;
+@everywhere Pkg.activate(".");
+@everywhere using CSV
+@everywhere using GRASS
+@everywhere using LsqFit
+@everywhere using DataFrames
+@everywhere using Statistics
+@everywhere using EchelleCCFs
+@everywhere using SharedArrays
 
 # showyourwork imports
+@everywhere using PyCall
 @everywhere begin
     py"""
     from showyourwork.paths import user as Paths
 
     paths = Paths()
     """
-
-    datadir = py"""str(paths.data)""" * "/"
 end
+
+@everywhere datadir = py"""str(paths.data)""" * "/"
 
 # define spec_loop function
 include(GRASS.moddir * "figures/fig_functions.jl")
