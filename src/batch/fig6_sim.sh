@@ -5,8 +5,8 @@
 #SBATCH --mem-per-cpu=8GB
 #SBATCH --time=48:00:00
 #SBATCH --job-name=P22_fig6
-#SBATCH --workdir=/storage/home/mlp95/work/palumbo22
-#SBATCH --output=/storage/home/mlp95/work/logs/grass/fig6_sim.%j.out
+#SBATCH --chdir=/storage/home/mlp95/work/palumbo22
+#SBATCH --output=/storage/home/mlp95/work/logs/fig6_sim.%j.out
 
 echo "About to start: $SLURM_JOB_NAME"
 date
