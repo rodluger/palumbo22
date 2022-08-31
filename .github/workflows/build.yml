@@ -20,6 +20,9 @@ jobs:
         run: |
           wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
           sudo ~/bin/tlmgr install type1cm cm-super
+          sudo ~/bin/tlmgr update --self --all
+          sudo ~/bin/tlmgr path add
+          sduo ~/bin/fmtutil-sys --all
 
       - name: Set up 🐍 ${{ matrix.python }}
         uses: actions/setup-python@v2
