@@ -3,7 +3,6 @@ using Distributed
 @everywhere begin
     using Pkg
     Pkg.activate(".")
-    Pkg.instantiate()
 end
 @everywhere using GRASS
 @everywhere using Statistics
@@ -16,7 +15,17 @@ using FileIO
 using DataFrames
 using HypothesisTests
 
-# define rms loop function
+# showyourwork imports
+using PyCall
+py"""
+from showyourwork.paths import user as Paths
+
+paths = Paths()
+"""
+
+@everywhere datadir = py"""str(paths.data)""" * "/"
+
+# define spec_loop function
 include(GRASS.moddir * "figures/fig_functions.jl")
 
 # some global stuff
