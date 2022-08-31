@@ -64,12 +64,12 @@ function fig2ab()
     # set axis limits + labels
     ax1.set_xlim(xlims...)
     ax1.set_ylim(0.1, 1.0)
-    ax1.set_xlabel(L"{\rm Relative\ Wavelength\ (m\AA)}")
-    ax1.set_ylabel(L"{\rm Normalized\ Intensity}")
+    # ax1.set_xlabel(L"{\rm Relative\ Wavelength\ (m\AA)}")
+    # ax1.set_ylabel(L"{\rm Normalized\ Intensity}")
 
     # set color bar
     cb = fig.colorbar(sm)
-    cb.set_label(L"{\rm Time\ from\ first\ observation\ (min)}")
+    # cb.set_label(L"{\rm Time\ from\ first\ observation\ (min)}")
 
     # save the plot
     fig.savefig(plotdir * "fig2a.pdf")
@@ -84,12 +84,12 @@ function fig2ab()
     end
 
     # set axis limits + labels
-    ax1.set_xlabel(L"{\rm Normalized\ Intensity}")
-    ax1.set_ylabel(L"{\rm Width\ across\ line\ (\AA)}")
+    # ax1.set_xlabel(L"{\rm Normalized\ Intensity}")
+    # ax1.set_ylabel(L"{\rm Width\ across\ line\ (\AA)}")
 
     # set color bar
     cb = fig.colorbar(sm)
-    cb.set_label(L"{\rm Time\ from\ first\ observation\ (min)}")
+    # cb.set_label(L"{\rm Time\ from\ first\ observation\ (min)}")
 
     # save the plot
     fig.savefig(plotdir * "fig2b.pdf")
