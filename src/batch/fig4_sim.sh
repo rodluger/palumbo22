@@ -2,7 +2,7 @@
 #SBATCH -A ebf11_c
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
-#SBATCH --mem=4GB
+#SBATCH --mem=8GB
 #SBATCH --time=48:00:00
 #SBATCH --job-name=P22_fig4
 #SBATCH --output=/storage/home/mlp95/work/logs/grass/fig4_sim.%j.out

@@ -1,17 +1,19 @@
 # import stuff
 using Distributed
-@everywhere using Pkg
-@everywhere Pkg.activate(".")
-@everywhere using Statistics
+@everywhere begin
+    using Pkg
+    Pkg.activate(".")
+    Pkg.instantiate()
+end
 @everywhere using GRASS
-@everywhere using SharedArrays
+@everywhere using Statistics
 @everywhere using EchelleCCFs
+@everywhere using SharedArrays
 using CSV
 using JLD2
 using LsqFit
 using FileIO
 using DataFrames
-using LaTeXStrings
 using HypothesisTests
 
 # define rms loop function

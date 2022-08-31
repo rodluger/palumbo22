@@ -1,15 +1,17 @@
 # import stuff
 using Distributed
-@everywhere using Pkg
-@everywhere Pkg.activate(".")
+@everywhere begin
+    using Pkg
+    Pkg.activate(".")
+    Pkg.instantiate()
+end
 @everywhere using Statistics
 @everywhere using GRASS
 @everywhere using SharedArrays
 @everywhere using EchelleCCFs
 using CSV
-using DataFrames
-using LaTeXStrings
 using LsqFit
+using DataFrames
 
 # define rms loop function
 include(GRASS.moddir * "figures/fig_functions.jl")
