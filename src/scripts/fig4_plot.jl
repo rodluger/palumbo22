@@ -1,11 +1,11 @@
 # import stuff
 using Pkg; Pkg.activate("."); Pkg.instantiate()
-using GRASS
-using Statistics
-using EchelleCCFs
 using CSV
+using GRASS
 using LsqFit
+using Statistics
 using DataFrames
+using EchelleCCFs
 
 # showyourwork imports
 using PyCall
@@ -15,19 +15,21 @@ from showyourwork.paths import user as Paths
 paths = Paths()
 """
 
-datadir = py"""str(paths.data)""" * "/"
-plotdir = py"""str(paths.figures)""" * "/"
+py"""
+import os
+from pathlib import Path
+os.environ["PATH"] += os.pathsep + str(Path.home() / "bin")
+"""
 
 # plotting imports
 using LaTeXStrings
 import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
-using PyCall; animation = pyimport("matplotlib.animation")
-mpl.style.use(GRASS.moddir * "figures/fig.mplstyle")
+mpl.style.use(py"""str(paths.scripts)""" * "/fig.mplstyle")
 
-# some global stuff
-const N = round.(Int, 2 .^ range(6, 10, step=0.5))
-const Nt = 100
-const Nloop = 24
+# define directories
+const plotdir = py"""str(paths.figures)""" * "/"
+const datadir = py"""str(paths.data)""" * "/"
+const staticdir = py"""str(paths.static)""" * "/"
 
 # read in the data
 fname = datadir * "rms_vs_res.csv"

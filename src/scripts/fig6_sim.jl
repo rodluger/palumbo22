@@ -1,24 +1,24 @@
 # import stuff
 using Distributed
-@everywhere begin
-    using Pkg
-    Pkg.activate(".")
-end
+@everywhere using Pkg;
+@everywhere Pkg.activate(".");
+@everywhere using CSV
 @everywhere using GRASS
+@everywhere using LsqFit
+@everywhere using DataFrames
 @everywhere using Statistics
 @everywhere using EchelleCCFs
 @everywhere using SharedArrays
-using CSV
-using LsqFit
-using DataFrames
 
 # showyourwork imports
-using PyCall
-py"""
-from showyourwork.paths import user as Paths
+@everywhere using PyCall
+@everywhere begin
+    py"""
+    from showyourwork.paths import user as Paths
 
-paths = Paths()
-"""
+    paths = Paths()
+    """
+end
 
 @everywhere datadir = py"""str(paths.data)""" * "/"
 
@@ -29,10 +29,6 @@ include(GRASS.moddir * "figures/fig_functions.jl")
 const N = 132
 const Nt = 200
 const Nloop = 200
-
-# get command line args and output directories
-run, plot = parse_args(ARGS)
-grassdir, plotdir, datadir = check_plot_dirs()
 
 function main()
     # set up stuff for lines
@@ -93,52 +89,5 @@ function main()
 end
 
 # run the simulation
-if run
-    main()
-end
-
-# plotting code block
-if plot
-    # plotting imports
-    import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
-    using PyCall; animation = pyimport("matplotlib.animation")
-    mpl.style.use(GRASS.moddir * "figures/fig.mplstyle")
-
-    # read in the data
-    fname = datadir * "inclination_" *  string(N) * ".csv"
-    df = CSV.read(fname, DataFrame)
-
-    # assign to variable names
-    ang = df.inc .* (180.0/π)
-    avg_avg_inc = df.avg_avg_inc
-    std_avg_inc = df.std_avg_inc
-    avg_rms_inc = df.avg_rms_inc
-    std_rms_inc = df.std_rms_inc
-
-    # get the errors
-    err_avg_inc = std_avg_inc ./ sqrt(Nloop)
-    err_rms_inc = std_rms_inc ./ sqrt(Nloop)
-
-    # plot the results
-    fig = plt.figure()
-    ax1 = fig.add_subplot()
-    ax1.errorbar(ang, avg_rms_inc, yerr=err_rms_inc, capsize=3.0, color="black", fmt=".")
-    ax1.fill_between(ang, avg_rms_inc .- std_rms_inc, avg_rms_inc .+ std_rms_inc, color="tab:blue", alpha=0.3)
-
-    # annotate the axes
-    arrowprops = Dict("facecolor"=>"black", "shrink"=>0.05, "width"=>2.0,"headwidth"=>8.0)
-    ax1.annotate(L"\textnormal{Pole-on}", xy=(69.8, 0.39), xytext=(0.0,0.388), arrowprops=arrowprops)
-    ax1.annotate(L"\textnormal{Equator-on}", xy=(70.0, 0.388))
-
-    # set labels, etc.
-    ax1.set_xlabel(L"{\rm Inclination\ (deg)}")
-    ax1.set_ylabel(L"{\rm RMS}_{\rm RV}\ {\rm (m s}^{-1})")
-    ax1.set_xticks(range(0, 90, length=10))
-    ax1.set_ylim(0.375, 0.675)
-
-    # save the figure
-    fig.savefig(plotdir * "fig6.pdf")
-    plt.clf(); plt.close()
-    println(">>> Figure written to: " * plotdir * "fig6.pdf")
-end
+main()
 

@@ -30,7 +30,7 @@ const N = round.(Int, 2 .^ range(6, 10, step=0.5))
 const Nt = 100
 const Nloop = 24
 
-function main()
+function fig4()
     # set up parameters for lines
     lines = [5434.5]
     depths = [0.8]
@@ -73,4 +73,4 @@ function main()
 end
 
 # run the simulation
-main()
+fig4()

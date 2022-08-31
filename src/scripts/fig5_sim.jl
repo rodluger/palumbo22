@@ -1,24 +1,24 @@
 # import stuff
 using Distributed
-@everywhere begin
-    using Pkg
-    Pkg.activate(".")
-end
+@everywhere using Pkg;
+@everywhere Pkg.activate(".");
+@everywhere using CSV
 @everywhere using GRASS
+@everywhere using LsqFit
+@everywhere using DataFrames
 @everywhere using Statistics
 @everywhere using EchelleCCFs
 @everywhere using SharedArrays
-using CSV
-using LsqFit
-using DataFrames
 
 # showyourwork imports
-using PyCall
-py"""
-from showyourwork.paths import user as Paths
+@everywhere using PyCall
+@everywhere begin
+    py"""
+    from showyourwork.paths import user as Paths
 
-paths = Paths()
-"""
+    paths = Paths()
+    """
+end
 
 @everywhere datadir = py"""str(paths.data)""" * "/"
 
@@ -30,11 +30,7 @@ const N = 132
 const Nt = 200
 const Nloop = 200
 
-# get command line args and output directories
-run, plot = parse_args(ARGS)
-grassdir, plotdir, datadir = check_plot_dirs()
-
-function main()
+function fig5()
     # set up parameters for lines
     lines = [5434.5]
     depths = range(0.05, stop=0.95, step=0.05)
@@ -67,6 +63,7 @@ function main()
 
     # make data frame
     df = DataFrame()
+    df[!,:Nloop] = Nloop
     df[!,:depths] = depths
     df[!,:avg_avg_depth] = avg_avg_depth
     df[!,:std_avg_depth] = std_avg_depth
@@ -80,50 +77,5 @@ function main()
 end
 
 # run the simulation
-if run
-    main()
-end
-
-if plot
-    # plotting imports
-    import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
-    using PyCall; animation = pyimport("matplotlib.animation")
-    mpl.style.use(GRASS.moddir * "figures/fig.mplstyle")
-
-    # read in the data
-    fname = datadir * "rms_vs_depth_" * string(N) * ".csv"
-    df = CSV.read(fname, DataFrame)
-
-    # assign to variable names
-    depths = df.depths
-    avg_avg_depth = df.avg_avg_depth
-    std_avg_depth = df.std_avg_depth
-    avg_rms_depth = df.avg_rms_depth
-    std_rms_depth = df.std_rms_depth
-
-    # get the errors
-    err_avg_depth = std_avg_depth ./ sqrt(Nloop)
-    err_rms_depth = std_rms_depth ./ sqrt(Nloop)
-
-    # plot the results
-    fig, ax1 = plt.subplots()
-    ax1.errorbar(depths, avg_rms_depth, yerr=err_rms_depth, capsize=3.0, color="black", fmt=".")
-    ax1.fill_between(depths, avg_rms_depth .- std_rms_depth, avg_rms_depth .+ std_rms_depth, color="tab:blue", alpha=0.3)
-    ax1.fill_betweenx(range(0.0, 1.0, length=5), zeros(5), zeros(5) .+ 0.2, hatch="/", fc="black", ec="white", alpha=0.15, zorder=0)
-
-    # set labels, etc.
-    ax1.set_xlabel(L"{\rm Line\ Depth}")
-    ax1.set_ylabel(L"{\rm RMS}_{\rm RV}\ {\rm (m s}^{-1})")
-    ax1.set_xlim(0.0, 1.0)
-    ax1.set_ylim(0.375, 0.675)
-
-    # annotate the axes and save the figure
-    arrowprops = Dict("facecolor"=>"black", "shrink"=>0.05, "width"=>2.0,"headwidth"=>8.0)
-    ax1.annotate(L"{\rm Shallow}", xy=(0.85,0.39), xytext=(0.05,0.388), arrowprops=arrowprops)
-    ax1.annotate(L"{\rm Deep}", xy=(0.86, 0.388))
-    fig.savefig(plotdir * "fig5.pdf")
-    plt.clf(); plt.close()
-    println(">>> Figure written to: " * plotdir * "fig5.pdf")
-end
-
+fig5()
 

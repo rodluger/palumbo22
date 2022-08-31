@@ -17,7 +17,6 @@ from pathlib import Path
 os.environ["PATH"] += os.pathsep + str(Path.home() / "bin")
 """
 
-
 # plotting imports
 using LaTeXStrings
 import PyPlot; plt = PyPlot; mpl = plt.matplotlib; plt.ioff()
