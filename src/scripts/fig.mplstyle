@@ -6,8 +6,4 @@ grid.linestyle              : :
 figure.autolayout           : True
 savefig.bbox                : tight
 axes.formatter.useoffset    : False
-text.usetex                 : False
-font.family                 : serif
-font.serif                  : cmr10
-mathtext.fontset            : cm
-axes.formatter.use_mathtext : True
+text.usetex                 : True
