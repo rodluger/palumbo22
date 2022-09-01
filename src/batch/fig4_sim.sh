@@ -15,6 +15,6 @@ echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR
 echo "About to start Julia"
 julia -e "using Pkg; Pkg.activate(\".\"); Pkg.precompile()"
-julia -p 2 src/scripts/fig4_sim.jl
+julia -p 7 src/scripts/fig4_sim.jl
 echo "Julia exited"
 date
