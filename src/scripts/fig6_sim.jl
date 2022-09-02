@@ -1,14 +1,13 @@
 # import stuff
 using Distributed
-@everywhere using Pkg;
-@everywhere Pkg.activate(".");
-@everywhere using CSV
+@everywhere using Pkg
+@everywhere Pkg.activate(".")
 @everywhere using GRASS
-@everywhere using LsqFit
-@everywhere using DataFrames
 @everywhere using Statistics
 @everywhere using EchelleCCFs
 @everywhere using SharedArrays
+using JLD2
+using FileIO
 
 # showyourwork imports
 @everywhere using PyCall
@@ -74,17 +73,15 @@ function main()
         std_rms_inc[i] = std_rms1
     end
 
-    # make data frame
-    df = DataFrame()
-    df[!,:inc] = incls
-    df[!,:avg_avg_inc] = avg_avg_inc
-    df[!,:std_avg_inc] = std_avg_inc
-    df[!,:avg_rms_inc] = avg_rms_inc
-    df[!,:std_rms_inc] = std_rms_inc
-
-    # write results to CSV
-    fname = datadir * "inclination_" *  string(N) * ".csv"
-    CSV.write(fname, df)
+    # write results to file
+    fname = datadir * "inclination_sim.jld2"
+    save(fname,
+         "Nloop", Nloop,
+         "incls", incls,
+         "avg_avg_inc", avg_avg_inc,
+         "std_avg_inc", std_avg_inc,
+         "avg_rms_inc", avg_rms_inc,
+         "std_rms_inc", std_rms_inc)
     return nothing
 end
 

@@ -1,14 +1,13 @@
 # import stuff
 using Distributed
-@everywhere using Pkg;
-@everywhere Pkg.activate(".");
-@everywhere using CSV
+@everywhere using Pkg
+@everywhere Pkg.activate(".")
 @everywhere using GRASS
-@everywhere using LsqFit
-@everywhere using DataFrames
 @everywhere using Statistics
 @everywhere using EchelleCCFs
 @everywhere using SharedArrays
+using JLD2
+using FileIO
 
 # showyourwork imports
 @everywhere using PyCall
@@ -61,18 +60,15 @@ function fig5()
         std_rms_depth[i] = std_rms1
     end
 
-    # make data frame
-    df = DataFrame()
-    df[!,:Nloop] = Nloop
-    df[!,:depths] = depths
-    df[!,:avg_avg_depth] = avg_avg_depth
-    df[!,:std_avg_depth] = std_avg_depth
-    df[!,:avg_rms_depth] = avg_rms_depth
-    df[!,:std_rms_depth] = std_rms_depth
-
-    # write to CSV
-    fname = datadir * "rms_vs_depth_" * string(N) * ".csv"
-    CSV.write(fname, df)
+    # write to file
+    fname = datadir * "depth_sim.jld2"
+    save(fname,
+         "Nloop", Nloop,
+         "depths", depths,
+         "avg_avg_depth", avg_avg_depth,
+         "std_avg_depth", std_avg_depth,
+         "avg_rms_depth", avg_rms_depth,
+         "std_rms_depth", std_rms_depth)
     return nothing
 end
 

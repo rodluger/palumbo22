@@ -1,14 +1,13 @@
 # import stuff
 using Distributed
-@everywhere using Pkg;
-@everywhere Pkg.activate(".");
-@everywhere using CSV
+@everywhere using Pkg
+@everywhere Pkg.activate(".")
 @everywhere using GRASS
-@everywhere using LsqFit
-@everywhere using DataFrames
 @everywhere using Statistics
 @everywhere using EchelleCCFs
 @everywhere using SharedArrays
+using JLD2
+using FileIO
 
 # showyourwork imports
 @everywhere using PyCall
@@ -57,18 +56,15 @@ function fig4()
     	std_rms_res[i] = std_rms1
     end
 
-    # make data frame
-    df = DataFrame()
-    df[!,:res] = N
-    df[!,:Nloop] = Nloop
-    df[!,:avg_avg_res] = avg_avg_res
-    df[!,:std_avg_res] = std_avg_res
-    df[!,:avg_rms_res] = avg_rms_res
-    df[!,:std_rms_res] = std_rms_res
-
-    # write to CSV
-    fname = datadir * "rms_vs_res.csv"
-    CSV.write(fname, df)
+    # write to file
+    fname = datadir * "resolution_sim.jld2"
+    save(fname,
+         "res", N,
+         "Nloop", Nloop,
+         "avg_avg_res", avg_avg_res,
+         "std_avg_res", std_avg_res,
+         "avg_rms_res", avg_rms_res,
+         "std_rms_res", std_rms_res)
     return nothing
 end
 

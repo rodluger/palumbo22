@@ -16,11 +16,11 @@ scripts:
     julia {script}
 dependencies:
     src/scripts/fig4_plot.jl:
-      - src/data/rms_vs_res.csv
+      - src/data/resolution_sim.jld2
     src/scripts/fig5_plot.jl:
-      - src/data/rms_vs_depth_132.csv
+      - src/data/depth_sim.jld2
     src/scripts/fig6_plot.jl:
-      - src/data/inclination_132.csv
+      - src/data/inclination_sim.jld2
     src/scripts/fig7_plot.jl:
-      - src/data/observe_132_loop_1200.csv
+      - src/data/observation_sim.jld2
 

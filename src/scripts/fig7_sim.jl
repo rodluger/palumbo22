@@ -6,12 +6,8 @@ using Distributed
 @everywhere using Statistics
 @everywhere using EchelleCCFs
 @everywhere using SharedArrays
-using CSV
 using JLD2
-using LsqFit
 using FileIO
-using DataFrames
-using HypothesisTests
 
 # showyourwork imports
 @everywhere using PyCall
@@ -93,8 +89,8 @@ function main()
     rms_largedead = convert(Array{Float64}, rms_largedead)
 
     # save the output
-    outfile = datadir * "observe_" * string(N) * "_loop_" * string(Nloop) * ".jld2"
-    save(outfile,
+    fname = datadir * "observation_sim.jld2"
+    save(fname,
          "avg_shortdead", avg_shortdead,
          "rms_shortdead", rms_shortdead,
          "avg_largedead", avg_largedead,

@@ -20,7 +20,7 @@ rule fig4:
     input:
         "src/scripts/fig4_sim.jl"
     output:
-        "src/data/rms_vs_res.csv"
+        "src/data/resolution_sim.jld2"
     cache:
         True
     shell:
@@ -30,7 +30,7 @@ rule fig5:
     input:
         "src/scripts/fig5_sim.jl"
     output:
-        "src/data/rms_vs_depth_132.csv"
+        "src/data/depth_sim.jld2"
     cache:
         True
     shell:
@@ -40,7 +40,7 @@ rule fig6:
     input:
         "src/scripts/fig6_sim.jl"
     output:
-        "src/data/inclination_132.csv"
+        "src/data/inclination_sim.jld2"
     cache:
         True
     shell:
@@ -50,7 +50,7 @@ rule fig7:
     input:
         "src/scripts/fig7_sim.jl"
     output:
-        "src/data/observe_132_loop_1200.csv"
+        "src/data/observation_sim.jld2"
     cache:
         True
     shell:

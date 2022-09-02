@@ -1,12 +1,10 @@
 # import stuff
 using Pkg; Pkg.activate("."); Pkg.instantiate()
-using CSV
 using JLD2
 using GRASS
 using LsqFit
 using FileIO
 using Statistics
-using DataFrames
 using EchelleCCFs
 using HypothesisTests
 
@@ -35,16 +33,16 @@ const datadir = py"""str(paths.data)""" * "/"
 const staticdir = py"""str(paths.static)""" * "/"
 
 # read in the data
-file = datadir * "observe_" * string(N) * "_loop_" * string(Nloop) * ".jld2"
-d = load(file)
-avg_shortdead = d["avg_shortdead"]
-rms_shortdead = d["rms_shortdead"]
-avg_largedead = d["avg_largedead"]
-rms_largedead = d["rms_largedead"]
-exp_time = d["exp_time"]
-depths = d["depths"]
-N_obs = d["N_obs"]
-snr = d["snr"]
+file = datadir * "observation_sim.jld2"
+data = load(file)
+avg_shortdead = data["avg_shortdead"]
+rms_shortdead = data["rms_shortdead"]
+avg_largedead = data["avg_largedead"]
+rms_largedead = data["rms_largedead"]
+exp_time = data["exp_time"]
+depths = data["depths"]
+N_obs = data["N_obs"]
+snr = data["snr"]
 
 # initialize plotting objects
 fig = plt.figure(figsize=(10.5, 6.75))

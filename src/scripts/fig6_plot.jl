@@ -1,10 +1,10 @@
 # import stuff
 using Pkg; Pkg.activate("."); Pkg.instantiate()
-using CSV
+using JLD2
 using GRASS
 using LsqFit
+using FileIO
 using Statistics
-using DataFrames
 using EchelleCCFs
 
 # showyourwork imports
@@ -32,15 +32,14 @@ const datadir = py"""str(paths.data)""" * "/"
 const staticdir = py"""str(paths.static)""" * "/"
 
 # read in the data
-fname = datadir * "inclination_" *  string(N) * ".csv"
-df = CSV.read(fname, DataFrame)
-
-# assign to variable names
-ang = df.inc .* (180.0/π)
-avg_avg_inc = df.avg_avg_inc
-std_avg_inc = df.std_avg_inc
-avg_rms_inc = df.avg_rms_inc
-std_rms_inc = df.std_rms_inc
+file = datadir * "inclination_sim.jld2"
+data = load(file)
+ang = data["incls"] .* (180.0/π)
+Nloop = data["Nloop"]
+avg_avg_inc = data["avg_avg_inc"]
+std_avg_inc = data["std_avg_inc"]
+avg_rms_inc = data["avg_rms_inc"]
+std_rms_inc = data["std_rms_inc"]
 
 # get the errors
 err_avg_inc = std_avg_inc ./ sqrt(Nloop)

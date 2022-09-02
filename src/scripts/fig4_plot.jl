@@ -1,10 +1,10 @@
 # import stuff
 using Pkg; Pkg.activate("."); Pkg.instantiate()
-using CSV
+using JLD2
 using GRASS
 using LsqFit
+using FileIO
 using Statistics
-using DataFrames
 using EchelleCCFs
 
 # showyourwork imports
@@ -32,12 +32,12 @@ const datadir = py"""str(paths.data)""" * "/"
 const staticdir = py"""str(paths.static)""" * "/"
 
 # read in the data
-fname = datadir * "rms_vs_res.csv"
-df = CSV.read(fname, DataFrame)
-res = df.res
-Nloop = df.Nloop
-rms_res = df.avg_rms_res
-std_res = df.std_rms_res
+file = datadir * "resolution_sim.jld2"
+data = load(file)
+res = data["res"]
+Nloop = data["Nloop"]
+rms_res = data["avg_rms_res"]
+std_res = data["std_rms_res"]
 
 # get the error
 err_res = std_res ./ sqrt(Nloop)

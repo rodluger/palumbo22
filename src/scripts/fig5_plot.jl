@@ -1,10 +1,10 @@
 # import stuff
 using Pkg; Pkg.activate("."); Pkg.instantiate()
-using CSV
+using JLD2
 using GRASS
 using LsqFit
+using FileIO
 using Statistics
-using DataFrames
 using EchelleCCFs
 
 # showyourwork imports
@@ -32,16 +32,14 @@ const datadir = py"""str(paths.data)""" * "/"
 const staticdir = py"""str(paths.static)""" * "/"
 
 # read in the data
-fname = datadir * "rms_vs_depth_" * string(N) * ".csv"
-df = CSV.read(fname, DataFrame)
-
-# assign to variable names
-Nloop = df.Nloop
-depths = df.depths
-avg_avg_depth = df.avg_avg_depth
-std_avg_depth = df.std_avg_depth
-avg_rms_depth = df.avg_rms_depth
-std_rms_depth = df.std_rms_depth
+file = datadir * "depth_sim.jld2"
+data = load(file)
+Nloop = data["Nloop"]
+depths = data["depth"]
+avg_avg_depth = data["avg_avg_depth"]
+std_avg_depth = data["std_avg_depth"]
+avg_rms_depth = data["avg_rms_depth"]
+std_rms_depth = data["std_rms_depth"]
 
 # get the errors
 err_avg_depth = std_avg_depth ./ sqrt(Nloop)
