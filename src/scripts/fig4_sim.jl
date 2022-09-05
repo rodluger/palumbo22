@@ -1,8 +1,9 @@
 # import stuff
 using Distributed
-using Pkg; Pkg.activate(".")
+using Pkg; Pkg.activate("."); Pkg.instantiate()
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
+@everywhere Pkg.instantiate()
 using CSV
 using GRASS; @everywhere using GRASS
 using Statistics; @everywhere using Statistics

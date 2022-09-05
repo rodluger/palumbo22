@@ -1,8 +1,9 @@
 # import stuff
 using Distributed
-using Pkg; Pkg.activate(".")
+using Pkg; Pkg.activate("."); Pkg.instantiate()
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
+@everywhere Pkg.instantiate()
 using CSV
 using GRASS; @everywhere using GRASS
 using Statistics; @everywhere using Statistics
@@ -10,7 +11,6 @@ using EchelleCCFs; @everywhere using EchelleCCFs
 using SharedArrays; @everywhere using SharedArrays
 using JLD2
 using FileIO
-
 # showyourwork imports
 @everywhere using PyCall
 @everywhere begin
