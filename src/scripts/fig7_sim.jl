@@ -1,12 +1,13 @@
 # import stuff
 using Distributed
+using Pkg; Pkg.activate(".")
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
-@everywhere Pkg.instantiate()
-@everywhere using GRASS
-@everywhere using Statistics
-@everywhere using EchelleCCFs
-@everywhere using SharedArrays
+using CSV
+using GRASS; @everywhere using GRASS
+using Statistics; @everywhere using Statistics
+using EchelleCCFs; @everywhere using EchelleCCFs
+using SharedArrays; @everywhere using SharedArrays
 using JLD2
 using FileIO
 
