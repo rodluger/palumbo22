@@ -2,6 +2,7 @@
 using Distributed
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
+@everywhere Pkg.instantiate()
 @everywhere using GRASS
 @everywhere using Statistics
 @everywhere using EchelleCCFs
@@ -26,7 +27,7 @@ include(GRASS.moddir * "figures/fig_functions.jl")
 
 # some global stuff
 const N = 132
-const Nloop = 1200
+const Nloop = 2400
 
 function main()
     # set observing parameters
@@ -82,7 +83,7 @@ function main()
         end
     end
 
-    # convert to plain arrays
+    # convert sharedarrays to plain arrays for writeout
     avg_shortdead = convert(Array{Float64}, avg_shortdead)
     rms_shortdead = convert(Array{Float64}, rms_shortdead)
     avg_largedead = convert(Array{Float64}, avg_largedead)

@@ -2,6 +2,7 @@
 using Distributed
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
+@everywhere Pkg.instantiate()
 @everywhere using GRASS
 @everywhere using Statistics
 @everywhere using EchelleCCFs
@@ -59,6 +60,13 @@ function fig5()
         avg_rms_depth[i] = avg_rms1
         std_rms_depth[i] = std_rms1
     end
+
+    # convert sharedarrays to plain arrays for writeout
+    depths = convert(Array{Float64}, depths)
+    avg_avg_depth = convert(Array{Float64}, avg_avg_depth)
+    std_avg_depth = convert(Array{Float64}, std_avg_depth)
+    avg_rms_depth = convert(Array{Float64}, avg_rms_depth)
+    std_rms_depth = convert(Array{Float64}, std_rms_depth)
 
     # write to file
     fname = datadir * "depth_sim.jld2"

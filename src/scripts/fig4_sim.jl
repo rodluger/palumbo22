@@ -2,6 +2,7 @@
 using Distributed
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
+@everywhere Pkg.instantiate()
 @everywhere using GRASS
 @everywhere using Statistics
 @everywhere using EchelleCCFs
@@ -55,6 +56,12 @@ function fig4()
     	avg_rms_res[i] = avg_rms1
     	std_rms_res[i] = std_rms1
     end
+
+    # convert sharedarrays to plain arrays for writeout
+    avg_avg_res = convert(Array{Float64}, avg_avg_res)
+    std_avg_res = convert(Array{Float64}, std_avg_res)
+    avg_rms_res = convert(Array{Float64}, avg_rms_res)
+    std_rms_res = convert(Array{Float64}, std_rms_res)
 
     # write to file
     fname = datadir * "resolution_sim.jld2"

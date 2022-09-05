@@ -2,6 +2,7 @@
 using Distributed
 @everywhere using Pkg
 @everywhere Pkg.activate(".")
+@everywhere Pkg.instantiate()
 @everywhere using GRASS
 @everywhere using Statistics
 @everywhere using EchelleCCFs
@@ -72,6 +73,14 @@ function main()
         avg_rms_inc[i] = avg_rms1
         std_rms_inc[i] = std_rms1
     end
+
+    # convert sharedarrays to plain arrays for writeout
+    incls = convert(Array{Float64}, incls)
+    avg_avg_inc = convert(Array{Float64}, avg_avg_inc)
+    std_avg_inc = convert(Array{Float64}, std_avg_inc)
+    avg_rms_inc = convert(Array{Float64}, avg_rms_inc)
+    std_rms_inc = convert(Array{Float64}, std_rms_inc)
+
 
     # write results to file
     fname = datadir * "inclination_sim.jld2"
