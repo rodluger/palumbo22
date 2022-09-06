@@ -58,8 +58,8 @@ function read_iag(; isolate=true)
     end
 
     # read in the IAG atlas
-    CSV.read(file, DataFrame, ignorerepeated=true, delim="|", skipto=5,
-             footerskip=1, header=["wavenum", "nflux", "flux"])
+    iag = CSV.read(file, DataFrame, ignorerepeated=true, delim="|", skipto=5,
+                   footerskip=1, header=["wavenum", "nflux", "flux"])
 
     # convert wavenumber to wavelength in angstroms
     wavs = (1 ./ iag.wavenum) * 1e8
