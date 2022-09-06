@@ -99,7 +99,6 @@ Owing to recent advances in radial-velocity instrumentation and observation tech
 
 \keywords{Astronomy software, Exoplanet detection methods, High resolution spectroscopy, Solar granulation, Stellar granulation} 
 
-% Main body with filler text
 %% === introduction === 
 \section{Introduction} \label{intro}
 Since the detection of the first exoplanet orbiting a main sequence star \citep{Mayor1995}, the radial velocity (RV) method has enabled the discovery of several hundred planets to date \citep[see the NASA Exoplanet Archive;][]{Akeson2017}. Despite these successes, the RV method will \revise{need additional development to address stellar variability} and characterize Earth-analog planets around solar-type stars. In principle, the RV method uses the planet-induced Doppler reflex motion of host stars to infer the existence of planetary companions. In practice, the host stars exhibit intrinsic astrophysical variability that complicate or preclude the measurement of minute reflex velocities due to smaller, Earth-mass planets. Although advances in instrumentation have dramatically improved spectrograph stability and spectral sensitivity, the challenges posed by intrinsic stellar variability remain a significant barrier to the discovery of lower-mass, rocky planets \revise{in or near the habitable zone of other stellar systems.} \par
@@ -322,6 +321,14 @@ To further validate our model, we compare CCF bisectors for the synthetic and IA
 \subsection{Effects of Spatial Resolution} \label{subsec:res}
 
 %input{captions/fig4.tex}
+\begin{figure}
+    \epsscale{1.2}
+    \plotone{figures/fig4.pdf}
+    \caption{Effect of simulation spatial grid size on the generated synthetic spectra. Points indicate the mean RMS calculated from many RV time series, and error bars \revise{the standard error of the mean}. \revise{Two measurements of the RV variability from solar granulation are shown as the orange forward-hatched \citep{Elsworth1994} and green back-hatched \citep{Palle1999} regions. We find that our ideal grid size of $N^2 = 132^2$ (vertical dashed line), chosen to produce grid cells with angular area matching the weighted-average spatial resolution of the input observations, intersects the power law relation within the  \citet{Palle1999} region.} \revise{At spatial resolutions greater than $N\sim~400$, the angular size of the grid cells becomes much smaller than that of the smallest-footprint input observations and consequently loses physical validity.}}
+    \label{fig:res}
+    \script{fig4_plot.jl}
+\end{figure}{}
+
 \revise{To create synthetic spectra, \grass\ creates disk-resolved line profiles on a uniform spatial grid (as described in \S\ref{sec:resolved_disk}).} The \revise{ideal resolution of this spatial grid over the stellar surface would match that of the input observations. However, because the spatial resolution of the input observations was designed to approximate the typical angular area of supergranules and consequently varies with position on the disk (as described in \S\ref{subsec:input_data}), simulating an ideal grid is impractical.} Therefore, we choose \revise{a rectangular grid and set} $N$ \revise{(the number of grid cells along each Cartesian $xy$ direction in the sky plane) such that the area of the spatial grid cell matches the weighted-average area of the input data observations. Given the sizes of the elliptical oscillations described in \S\ref{subsec:input_data} and \citetalias{Lohner-Bottcher2018}, we compute $N^2\sim132^2$ as our optimized number of grid cells.} \par
 
 \revise{Given the complexity of the spatial scanning patterns in the input data, we further validate our choice of spatial resolution by comparing the RV RMS of synthetic time series to direct measurements of the granulation RMS in the literature.} \revise{To perform this comparison,} we repeatedly generate time series of synthetic spectra consisting of a single absorption line at several spatial grid sizes. These noiseless spectra were generated at the full 15-second cadence of the input solar data and with the native spectral resolution of $R=7 \times 10^5$. The single synthetic line was centered on $5434.5$ \AA\ and was assigned a continuum-normalized depth of 0.8, comparable to the depth of the template line in the input data. We then measured velocities from these spectra using the CCF method described in \S\ref{subsec:veloc}. This process was performed many times to measure a robust mean and sample variance of the mean-adjusted RMS of the RV time series. \par
@@ -334,6 +341,13 @@ The results of this test are shown in Figure~\ref{fig:res}. We find that the RMS
 
 \subsection{Synthetic Line Depth and RV Variability} \label{sec:depth_var}
 %input{captions/fig5.tex}
+\begin{figure}
+    \epsscale{1.2}
+    \plotone{figures/fig5.pdf}
+    \caption{Doppler velocity variability weakly scales with synthetic line depth \revise{for lines deeper than 20\% of continuum level.} As in Figure \ref{fig:res}, points indicate the mean RMS calculated from many RV time series, and error bars the \revise{standard error of the mean}. \revise{The shaded blue region encloses 68\% of all RMS values across all runs.} From line depths of 0.5\% to 20\%, the RMS of an RV time series obtained from \grass\ output spectra appears to decrease. From 20\% to 95\% depth, the RMS then appears to steadily increase. However, the shallowest lines (gray \revise{hatched} region) are synthesized exclusively from extrapolated input data \revise{(see Figure \ref{fig:two} and associated text)}. The trend in this region may therefore be unreliable.} 
+    \label{fig:rms_vs_depth}
+    \script{fig5_plot.jl}
+\end{figure}
 
 Given the asymmetric nature of stellar absorption lines \revise{and the trends in bisector shape seen with line depth \citep{Gray2008}}, it is conceivable that lines of different depths \revise{will} show varying levels of apparent Doppler variability. To test this possibility, we again generate many synthetic spectra consisting of single lines at different depths. We again add no noise to these spectra, and preserve the native spectral and temporal resolution of the input data. We plot the \revise{mean} RMS of the radial velocities measured from these spectra against line depth in Figure~\ref{fig:rms_vs_depth}. We find that the RV RMS scales with depth above a threshold of $20\%$ continuum flux. Lines shallower than $20\%$ continuum flux also show increased variability. However, we caution that these lines of lower depths are modeled solely from extrapolated input data \revise{(see Figure \ref{fig:two} and associated text)}, potentially compromising the reliability of these RV RMS measurements. \par 
 
@@ -342,10 +356,24 @@ Given the asymmetric nature of stellar absorption lines \revise{and the trends i
 \subsection{Effects of Inclination} \label{subsec:inc}
 
 %input{captions/fig6.tex}
+\begin{figure}
+    \epsscale{1.2}
+    \plotone{figures/fig6.pdf}
+    \caption{RV time-series variability and stellar inclination. As in Figure \ref{fig:res}, points indicate the mean RMS calculated from many RV time series, and error bars the standard \revise{error of the mean}. \revise{As in Figure \ref{fig:rms_vs_depth}, the shaded blue region encloses 68\% of all RMS values across all runs.} Equator-on stars do not appear to show any significant difference in \revise{granulation-driven} RV variability compared to pole-on stars. Additionally, \revise{neither the width} of the RV RMS \revise{distributions (blue shaded region)} \revise{nor the error on the mean (error bars)} appear to scale with inclination, suggesting that the impact of additional uncertainty introduced by a broader CCF profile for the Sun when viewed equator-on is \revise{small in comparison to the variability introduced by granulation signals.}}
+    \label{fig:inclination}
+    \script{fig6_plot.jl}
+\end{figure}{}
 
 As an additional test of \grass, we examine the relationship between sky-plane stellar inclination and synthetic RV variability. As in the previous sections, we use \grass\ to generate many synthetic spectra at the native spectral and temporal resolutions of the input data. These spectra again consist of a single line at 5434.5 \AA\ with a continuum-normalized depth of 0.8, similar to the template line in the input data. As seen in Figure~\ref{fig:inclination}, the \revise{mean} RMS of the measured RV \revise{time series} shows no strong trend with sky-projected inclination. Additionally, we note no strong trend between the \revise{widths} of the RMS \revise{distributions} and the stellar inclination. This suggests that the effects of the rotationally-broadened CCF profile for equator-on stars does not significantly affect the amplitude of granulation-induced RV signals. \par 
 
 %input{captions/fig7.tex}
+\begin{figure*}
+    \epsscale{1}
+    \plotone{figures/fig7.pdf}
+    \caption{Distributions of \revise{mean} velocities measured from many realizations of synthetic observing programs. The number of exposures, each lasting \revisetwo{300} seconds, is varied between panels, as annotated in the upper right of each panel. \revise{For each given realization of a synthetic observation program, the velocities measured within the same night are averaged. Each distribution is built up from these averaged velocity measurements.} The black histograms correspond to simulated observing plans with short, 30-second lags between simulated exposures. The blue histograms correspond to long, \revise{60}-minute lags between simulated exposures. The \revise{relative} values of \revise{the} measured \revise{velocities} are themselves arbitrary, and correspond to the difference in rest-frame and CCF-template wavelengths. As expected, the distributions visibly narrow as the number of exposures is increased. \revisetwo{However, there is no significant difference in the width of the short-wait and long-wait distributions in all panels (see Table \ref{tab:obs}),} \revise{in apparent disagreement with past studies which have shown that long waits between observations produced lower scatter in measured RVs \citep[e.g.,][]{Dumusque2011, Meunier2015, CollierCameron2019}.} In the future, input data spanning longer than 20 minutes would allow a more robust comparison of observing strategies\revise{, since our short baseline input data do not preserve longer timescale variability (e.g., as in supergranulation)}.}
+    \label{fig:obs}
+    \script{fig7_plot.jl}
+\end{figure*}
 
 \subsection{Informing Observing Strategy} \label{subsec:obs_strat}
 
