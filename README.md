@@ -8,7 +8,7 @@ This repo re-generates [Palumbo et al. (2022)](https://arxiv.org/abs/2110.11839)
 
 This paper was written with and presents version 1.0.x of [GRASS](https://github.com/palumbom/GRASS). All other package dependencies are documented in semi-human readable format in Manifest.toml, which the paper scripts will use to instantiate the Julia environment needed to run them.
 
-Note that the Figures 4 through 6 are *probabilistic* and not deterministic, so tiny differenes in the exact data points/errors from the published article may be noticeable.
+Note that the Figures 4 through 7 are *probabilistic* and not deterministic, so tiny differenes in the exact data points/errors from the published article may be noticeable.
 
 ## Author & Contact
 [![Twitter Follow](https://img.shields.io/twitter/follow/michael_palumbo?style=social)](https://twitter.com/michael_palumbo) [![GitHub followers](https://img.shields.io/github/followers/palumbom?label=Follow&style=social)](https://github.com/palumbom)
