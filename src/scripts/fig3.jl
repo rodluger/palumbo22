@@ -2,7 +2,6 @@
 using Pkg; Pkg.activate("."); Pkg.instantiate();
 using CSV
 using HTTP
-using GZip
 using GRASS
 using LsqFit
 using Statistics
@@ -34,25 +33,33 @@ const datadir = py"""str(paths.data)""" * "/"
 const staticdir = py"""str(paths.static)""" * "/"
 
 function download_iag()
+    # download the file
     println(">>> Downloading IAG atlas...")
     url = "http://cdsarc.u-strasbg.fr/viz-bin/nph-Cat/txt.gz?J/A+A/587/A65/spvis.dat.gz"
     file = HTTP.download(url, datadir * "spvis.dat.gz", update_period=Inf)
+
+    # decompress it
+    @assert isfile(file)
+    try
+        run(`gunzip -q $file`)
+    catch e
+        nothing
+    end
+
     println(">>> IAG atlas downloaded to " * file)
     return nothing
 end
 
 function read_iag(; isolate=true)
     # download the IAG atlas
-    file = datadir * "spvis.dat.gz"
+    file = datadir * "spvis.dat"
     if !isfile(file)
         download_iag()
     end
 
     # read in the IAG atlas
-    iag = GZip.open(file, "r") do io
-        CSV.read(io, DataFrame, ignorerepeated=true, delim="|", skipto=5,
-                 footerskip=1, header=["wavenum", "nflux", "flux"])
-    end
+    CSV.read(file, DataFrame, ignorerepeated=true, delim="|", skipto=5,
+             footerskip=1, header=["wavenum", "nflux", "flux"])
 
     # convert wavenumber to wavelength in angstroms
     wavs = (1 ./ iag.wavenum) * 1e8
